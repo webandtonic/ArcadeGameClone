@@ -31,23 +31,46 @@ let allEnemies = [];
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    this.x = 202;
+    this.y = 404;
     this.sprite = 'images/char-boy.png';
+
+    this.update = function() {
+
+    };
+
+    this.render = function() {
+
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    };
+
+    this.handleInput = function(key) {
+      switch (key) {
+        case "left":
+          if (this.x > 0) {
+            this.x -= 101;
+          };
+          break;
+        case "up":
+          if (this.y > 0) {
+            this.y -= 83;
+          };
+          break;
+        case "right":
+          if (this.x < 404) {
+            this.x += 101;
+          };
+          break;
+        case "down":
+          if (this.y < 404) {
+            this.y += 83;
+          };
+          break;
+      }
+    }
 };
 
-Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-};
 
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
