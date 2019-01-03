@@ -1,8 +1,9 @@
 // Enemies our player must avoid
-var Enemy = function(row, speed) {
-    this.x = 0;
+var Enemy = function(row, speed, start) {
+    this.x = -101 * 50 * start;
     this.y = (row * 83) - 20;
     this.speed = speed;
+    this.start = start;
     this.sprite = 'images/enemy-bug.png';
 };
 
@@ -10,9 +11,9 @@ var Enemy = function(row, speed) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     if (this.x > 505) {
-      this.x = -101;
+      this.x = -101 * 50 * this.start;
     } else {
-      this.x += 1 + dt + this.speed;
+      this.x += 2 + dt + this.speed;
     }
 
 };
@@ -25,8 +26,9 @@ Enemy.prototype.render = function() {
 let allEnemies = [];
 
 for (i = 1; i < 4; i++) {
-  for (j = 1; j < 5; j++) {
-    let bug = new Enemy(i, j);
+  for (j = 1; j < 4; j++) {
+    let k = Math.random();
+    let bug = new Enemy(i, j, k);
     allEnemies.push(bug);
   }
 }
