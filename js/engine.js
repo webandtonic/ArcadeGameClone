@@ -28,6 +28,8 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    document.querySelector("button").addEventListener("click", reset);
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -45,6 +47,7 @@ var Engine = (function(global) {
          * our update function since it may be used for smooth animation.
          */
         update(dt);
+
         render();
 
         /* Set our lastTime variable which is used to determine the time delta
@@ -55,7 +58,14 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+         // added if-statement to implement win game functionality
+         if (player.gameWon == true) {
+           document.querySelector(".modal").style.display = "flex";
+           win.cancelAnimationFrame(main);
+         } else {
+           win.requestAnimationFrame(main);
+         }
+
     }
 
     /* This function does some initial setup that should only occur once,
@@ -63,7 +73,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
+        // reset();
         lastTime = Date.now();
         main();
     }
@@ -160,8 +170,17 @@ var Engine = (function(global) {
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
+    // It does something now: it resets the game! Not called by init() anymore.
     function reset() {
-        // noop
+        player.x = 202;
+        player.y = 404;
+        allEnemies.forEach(function(bug) {
+          bug.x = -101 - (2000 * Math.random());
+        });
+        player.gameWon = false;
+        document.querySelector(".modal").style.display = "none";
+        lastTime = Date.now();
+        main();
     }
 
     /* Go ahead and load all of the images we know we're going to need to

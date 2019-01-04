@@ -32,11 +32,9 @@ let Player = function() {
     this.sprite = 'images/char-boy.png';
 
     this.update = function() {
-
 //define left and right border of actual image (without transparent background)
         this.rightHand = this.x + 80;
         this.leftHand = this.x + 21;
-
 // check position of player and call function if indicated
         switch (this.y) {
           case -11:
